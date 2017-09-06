@@ -24,4 +24,4 @@ class NpcapNpfConanTest(ConanFile):
 
     def test(self):
         os.chdir("bin")
-        self.run(".{0}example".format(os.sep))
+        self.run("example")
