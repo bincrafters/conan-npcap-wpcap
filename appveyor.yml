@@ -5,8 +5,6 @@ environment:
 
     CONAN_REFERENCE: "npcap-wpcap/0.93"
     CONAN_USERNAME: "bincrafters"
-    CONAN_LOGIN_USERNAME: "%BT_USER%"
-    CONAN_LOGIN_PASSWORD: "%BT_KEY%"
     CONAN_CHANNEL: "stable"
     VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
     CONAN_UPLOAD: "https://bintray.com/%CONAN_USERNAME%/public-conan"
