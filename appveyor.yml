@@ -9,9 +9,17 @@ environment:
     CONAN_REFERENCE: "npcap-wpcap/0.93"
     CONAN_USERNAME: "bincrafters"
     CONAN_CHANNEL: "stable"
-    VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
-    CONAN_UPLOAD: "https://bintray.com/%CONAN_USERNAME%/public-conan"
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    VS140COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2015\\Community\\Common7\\Tools\\"
+    CONAN_UPLOAD: "https://api.bintray.com/conan/bincrafters/public-conan"
+    CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan, https://api.bintray.com/conan/conan-community/conan"
+
+    matrix:
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          CONAN_VISUAL_VERSIONS: 12
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+          CONAN_VISUAL_VERSIONS: 14
+        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+          CONAN_VISUAL_VERSIONS: 15
 
 platform:
   - x86
