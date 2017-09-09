@@ -15,7 +15,6 @@ class NpcapWpcapConan(ConanFile):
         self.run("git clone --recursive --single-branch --depth 1 --branch=v{0} {1}.git".format(self.version, self.source_url)) 
     
     def build(self):
-        print("arch = " str(self.settings.arch))    
         vcvars = tools.vcvars_command(self.settings)
         self.run(vcvars)
 
@@ -40,10 +39,8 @@ class NpcapWpcapConan(ConanFile):
         win32_ext_dir = os.path.join(self.lib_parent_name, "wpcap", "Win32-Extensions")
         self.copy("Win32-Extensions.h", dst="include", src=win32_ext_dir)
         
-        arch_path = "x86" if self.settings.arch == "x86" else "x64"
-        print("arch = " str(self.settings.arch))        
+        arch_path = "x64" if self.settings.arch == "x86_64" else "x86"
         lib_dir = os.path.join(libpcap_root, "Win32", "Prj", arch_path, str(self.settings.build_type))
-        print(lib_dir)
         self.copy("wpcap.lib", dst="lib", src=lib_dir, keep_path=False)
 
     def package_info(self):

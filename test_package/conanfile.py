@@ -2,26 +2,22 @@ from conans import ConanFile, CMake
 import os
 
 
-channel = os.getenv("CONAN_CHANNEL", "testing")
-username = os.getenv("CONAN_USERNAME", "bincrafters")
-
-
-class NpcapNpfConanTest(ConanFile):
-    settings = "compiler", "build_type", "arch"
+class NpcapWpcapTestConan(ConanFile):
+    settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    
+    username = os.getenv("CONAN_USERNAME", "bincrafters")
+    channel = os.getenv("CONAN_CHANNEL", "testing")
+    requires = "Catch/1.9.6@uilianries/stable"
 
     def build(self):
         cmake = CMake(self)
-        # Current dir is "test_package/build/<build_id>" and CMakeLists.txt is in "test_package"
         cmake.configure(source_dir=self.conanfile_directory, build_dir="./")
         cmake.build()
 
     def imports(self):
-        self.copy("*.lib", dst="bin", src="bin")
-        self.copy("*.dll", dst="bin", src="bin")
-        self.copy("*.dylib*", dst="bin", src="lib")
+        self.copy("*", dst="bin", src="lib")
+        self.copy("*", dst="bin", src="bin")
 
     def test(self):
-        os.chdir("bin")
-        self.run("example")
+        cmake = CMake(self)
+        cmake.test()
