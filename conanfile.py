@@ -30,8 +30,12 @@ class NpcapWpcapConan(ConanFile):
         tools.replace_in_file(proj_path_full, r'..\..\..\..\packetWin7\Dll\Project\Release No NetMon and AirPcap\Packet.lib', npcap_lib_file)
         tools.replace_in_file(proj_path_full, r'..\..\..\..\packetWin7\Dll\Project\x64\Release No NetMon and AirPcap\Packet.lib', npcap_lib_file)
         build_command = tools.msvc_build_command(self.settings, sln_path_full,  targets=["Build"], upgrade_project=False)
-        self.run(build_command)
-
+        
+        if self.settings.arch == "x86":
+            self.run(build_command.replace('"x86"', '"Win32"'))
+        else:
+            self.run(build_command)
+            
     def package(self):
         libpcap_root = os.path.join(self.lib_parent_name, "wpcap","libpcap")
         self.copy("*.h", dst="include", src=libpcap_root)
