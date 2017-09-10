@@ -15,8 +15,9 @@ class NpcapWpcapConan(ConanFile):
         self.run("git clone --recursive --single-branch --depth 1 --branch=v{0} {1}.git".format(self.version, self.source_url)) 
     
     def build(self):
-        vcvars = tools.vcvars_command(self.settings)
-        self.run(vcvars)
+        os.environ["VisualStudioVersion"]="" 
+        # Above required to compile for VS14 from VS15
+        # which is currently blocked conan due to a precondition on vcvarsall.bat
 
         sln_path = os.path.join("wpcap", "libpcap", "Win32", "Prj")
         sln_file = os.path.join(sln_path, "wpcap.sln")
