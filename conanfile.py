@@ -1,4 +1,4 @@
-from conans import ConanFile, tools
+from conans import ConanFile, tools, os
 from conans.tools import os_info, SystemPackageTool, ChocolateyTool
 
 class NpcapWpcapConan(ConanFile):
