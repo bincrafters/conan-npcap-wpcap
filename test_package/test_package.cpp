@@ -1,6 +1,4 @@
-
 #include <stdio.h>
-
 #include "pcap.h"
 
 // Function prototypes
@@ -12,8 +10,4 @@ int main(int argc,char *argv[])
 {
     char error[PCAP_ERRBUF_SIZE];
     pcap_if_t *interfaces,*temp;
-    
-    return 0;
-
-
 }

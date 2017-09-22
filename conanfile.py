@@ -3,22 +3,18 @@ from conans import ConanFile, tools, os
 
 class NpcapWpcapConan(ConanFile):
     name = "npcap-wpcap"
-    version = "0.93"
+    version = "0.94"
     license = "NPCAP License"
     url = "https://github.com/bincrafters/conan-npcap"
     source_url = "https://github.com/nmap/npcap"
     settings = "arch", "compiler", "build_type"  
     lib_parent_name = "npcap"
-    build_requires = "npcap-dll/0.93@bincrafters/testing"
+    requires = "npcap-dll/0.94@bincrafters/testing"
 
     def source(self):
         self.run("git clone --recursive --single-branch --depth 1 --branch=v{0} {1}.git".format(self.version, self.source_url)) 
     
     def build(self):
-        os.environ["VisualStudioVersion"]="" 
-        # Above required to compile for VS14 from VS15
-        # which is currently blocked conan due to a precondition on vcvarsall.bat
-
         sln_path = os.path.join("wpcap", "libpcap", "Win32", "Prj")
         sln_file = os.path.join(sln_path, "wpcap.sln")
         proj_file = os.path.join(sln_path, "wpcap.vcxproj")
@@ -49,4 +45,4 @@ class NpcapWpcapConan(ConanFile):
         self.copy("wpcap.lib", dst="lib", src=lib_dir, keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = self.collect_libs()
+        self.cpp_info.libs = tools.collect_libs(self)
