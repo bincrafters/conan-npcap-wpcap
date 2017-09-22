@@ -1,5 +1,5 @@
-from conans import ConanFile, tools, os
-
+from conans import ConanFile, tools
+from conans.tools import os_info, SystemPackageTool, ChocolateyTool
 
 class NpcapWpcapConan(ConanFile):
     name = "npcap-wpcap"
@@ -7,10 +7,16 @@ class NpcapWpcapConan(ConanFile):
     license = "NPCAP License"
     url = "https://github.com/bincrafters/conan-npcap"
     source_url = "https://github.com/nmap/npcap"
-    settings = "arch", "compiler", "build_type"  
+    settings = "os", "arch", "compiler", "build_type"  
     lib_parent_name = "npcap"
     requires = "npcap-dll/0.94@bincrafters/testing"
 
+    def system_requirements(self):
+        if self.settings.os == "Windows":
+            pack_name = "winflexbison3"
+            installer = SystemPackageTool(tool=ChocolateyTool())
+            installer.install(pack_name)
+        
     def source(self):
         self.run("git clone --recursive --single-branch --depth 1 --branch=v{0} {1}.git".format(self.version, self.source_url)) 
     
